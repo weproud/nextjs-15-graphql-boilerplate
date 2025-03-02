@@ -1,5 +1,4 @@
 import type { Prisma, User, Post } from "@prisma/client";
-import type { Builder } from "@pothos/core";
 import type { PrismaModelTypes } from "@pothos/plugin-prisma";
 
 // Pothos Prisma 플러그인을 위한 타입 정의

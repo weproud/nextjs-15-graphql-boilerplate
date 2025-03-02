@@ -1,5 +1,5 @@
-const { Generator } = require("@paljs/generator");
-const path = require("path");
+import { Generator } from "@paljs/generator";
+import path from "path";
 
 async function main() {
   console.log("Prisma 스키마로부터 GraphQL 타입 생성 중...");

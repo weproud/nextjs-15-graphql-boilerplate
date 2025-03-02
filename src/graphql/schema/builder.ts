@@ -2,7 +2,6 @@ import SchemaBuilder from "@pothos/core";
 import PrismaPlugin from "@pothos/plugin-prisma";
 import RelayPlugin from "@pothos/plugin-relay";
 import { prisma } from "@/lib/prisma";
-import type { PrismaClient } from "@prisma/client";
 import { DateTimeResolver } from "graphql-scalars";
 
 export interface Todo {
