@@ -27,8 +27,3 @@ builder.prismaObject("User", {
     }),
   }),
 });
-
-// DateTime 스칼라 타입 정의
-builder.scalarType("DateTime", {
-  serialize: (value) => (value instanceof Date ? value.toISOString() : null),
-});

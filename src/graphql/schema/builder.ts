@@ -1,8 +1,9 @@
 import SchemaBuilder from "@pothos/core";
 import PrismaPlugin from "@pothos/plugin-prisma";
 import RelayPlugin from "@pothos/plugin-relay";
-import type PrismaTypes from "../generated/prisma-types";
 import { prisma } from "@/lib/prisma";
+import type { PrismaClient } from "@prisma/client";
+import { DateTimeResolver } from "graphql-scalars";
 
 export interface Todo {
   id: string;
@@ -11,20 +12,10 @@ export interface Todo {
 }
 
 // 스키마 빌더 생성
-export const builder = new SchemaBuilder<{
-  PrismaTypes: PrismaTypes;
-  Objects: {
-    Todo: Todo;
-  };
-}>({
+export const builder = new SchemaBuilder({
   plugins: [PrismaPlugin, RelayPlugin],
   prisma: {
     client: prisma,
-    // 모든 모델을 자동으로 노출하지 않음
-    // 필요한 모델만 명시적으로 노출
-    dmmf: prisma._dmmf,
-    // 필터링 및 정렬 기능 활성화
-    filterConnectionTotalCount: true,
   },
   // 릴레이 플러그인 설정
   relay: {
@@ -35,10 +26,25 @@ export const builder = new SchemaBuilder<{
 });
 
 // 쿼리 타입 정의
-builder.queryType({});
+builder.queryType({
+  fields: (t) => ({
+    _dummy: t.string({
+      resolve: () => "dummy",
+    }),
+  }),
+});
 
 // 뮤테이션 타입 정의
-builder.mutationType({});
+builder.mutationType({
+  fields: (t) => ({
+    _dummy: t.string({
+      resolve: () => "dummy",
+    }),
+  }),
+});
+
+// DateTime 스칼라 타입 정의
+builder.addScalarType("DateTime", DateTimeResolver, {});
 
 // Todo 타입 정의
 builder.objectType("Todo", {
